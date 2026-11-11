@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIP | Gablec</title>
+<style>
+:root {
+  --green: #176b45;
+  --light: #f2f7f2;
+  --orange: #ffb547;
+  --text: #202b25;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
+header {
+  background: var(--green);
+  color: white;
+  padding: 25px 18px;
+  text-align: center;
+}
+.logo { font-size: 34px; font-weight: 900; letter-spacing: 4px; }
+header p { margin-bottom: 0; }
+main {
+  max-width: 850px;
+  margin: 22px auto;
+  padding: 0 14px 35px;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px #183b2410;
+}
+h2 { font-size: 19px; margin-top: 0; }
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.product {
+  border: 2px solid #e5ebe6;
+  border-radius: 12px;
+  padding: 13px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 60px;
+}
+.product:has(input:checked) {
+  border-color: var(--green);
+  background: #edf8ef;
+}
+.product input { accent-color: var(--green); }
+.product span { flex: 1; }
+.price { font-size: 12px; color: #68746c; margin-top: 4px; }
+.field { margin-top: 14px; }
+label.field-label { display: block; font-weight: bold; margin-bottom: 7px; }
+select, input[type="text"], input[type="number"], textarea {
+  width: 100%;
+  border: 1px solid #d5ded6;
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+  background: white;
+}
+textarea { resize: vertical; min-height: 90px; }
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0;
+}
+.total {
+  font-size: 25px;
+  font-weight: bold;
+  color: var(--green);
+}
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.submit {
+  width: 100%;
+  background: var(--green);
+  color: white;
+}
+.submit:hover { background: #105437; }
+.secondary {
+  background: #e9eee9;
+  color: var(--text);
+  width: 100%;
+  margin-top: 10px;
+}
+.note { font-size: 13px; color: #69766d; line-height: 1.5; }
+#result {
+  display: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #edf8ef;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 450px) {
+  .products { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">MIP</div>
+  <h1>Gablec po tvom izboru 🥪</h1>
+  <p>Odaberi što želiš i pripremi svoju narudžbu!</p>
+</header>
+
+<main>
+<form id="orderForm">
+
+  <section class="card">
+    <h2>👤 Podaci učenika</h2>
+    <div class="field">
+      <label class="field-label" for="student">Ime i prezime</label>
+      <input id="student" type="text" placeholder="Upiši ime i prezime" required>
+    </div>
+    <div class="field">
+      <label class="field-label" for="className">Razred</label>
+      <input id="className" type="text" placeholder="Npr. 3.A">
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🥪 1. Odaberi sendvič</h2>
+    <div class="products">
+      <label class="product">
+        <input type="radio" name="sandwich" value="Sendvič sa šunkom" data-price="2.50" required>
+        <span>🥪 Sendvič sa šunkom<div class="price">2,50 €</div></span>
+      </label>
+      <label class="product">
+        <input type="radio" name="sandwich" value="Sendvič sa salamom" data-price="2.50">
+        <span>🥪 Sendvič sa salamom<div class="price">2,50 €</div></span>
+      </label>
+      <label class="product">
+        <input type="radio" name="sandwich" value="Sendvič sa kulenom" data-price="3.00">
+        <span>🥪 Sendvič s kulenom<div class="price">3,00 €</div></span>
+      </label>
+      <label class="product">
+        <input type="radio" name="sandwich" value="Sendvič sa sirom" data-price="2.30">
+        <span>🧀 Sendvič sa sirom<div class="price">2,30 €</div></span>
+      </label>
+      <label class="product">
+        <input type="radio" name="sandwich" value="Sendvič po izboru" data-price="3.00">
+        <span>✨ Sendvič po izboru<div class="price">3,00 €</div></span>
+      </label>
+    </div>
+    <p class="note">Cijene su ogledne i možeš ih promijeniti u kodu.</p>
+  </section>
+
+  <section class="card">
+    <h2>🥖 2. Pecivo</h2>
+    <div class="products">
+      <label class="product"><input type="radio" name="bread" value="Bijelo pecivo" checked><span>🥖 Bijelo pecivo</span></label>
+      <label class="product"><input type="radio" name="bread" value="Kajzerica"><span>🥯 Kajzerica</span></label>
+      <label class="product"><input type="radio" name="bread" value="Integralno pecivo"><span>🌾 Integralno</span></label>
+      <label class="product"><input type="radio" name="bread" value="Bez peciva"><span>❌ Bez peciva</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🥩 3. Salama</h2>
+    <div class="products">
+      <label class="product"><input type="radio" name="salami" value="Šunka" checked><span>Šunka</span></label>
+      <label class="product"><input type="radio" name="salami" value="Posebna salama"><span>Posebna salama</span></label>
+      <label class="product"><input type="radio" name="salami" value="Čajna salama"><span>Čajna salama</span></label>
+      <label class="product"><input type="radio" name="salami" value="Kulen"><span>Kulen</span></label>
+      <label class="product"><input type="radio" name="salami" value="Bez salame"><span>Bez salame</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🧂 4. Dodaci</h2>
+    <div class="products">
+      <label class="product"><input type="checkbox" name="extras" value="Majoneza"><span>Majoneza</span></label>
+      <label class="product"><input type="checkbox" name="extras" value="Kečap"><span>Kečap</span></label>
+      <label class="product"><input type="checkbox" name="extras" value="Sir"><span>Dodatni sir</span></label>
+      <label class="product"><input type="checkbox" name="extras" value="Salata"><span>Salata</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🥤 5. Piće i dodatni artikli</h2>
+    <p class="note">Označi sve što želiš. Možeš odabrati više artikala.</p>
+    <div class="products">
+      <label class="product"><input type="checkbox" name="drinks" value="Voda" data-price="1.00"><span>💧 Voda<div class="price">1,00 €</div></span></label>
+      <label class="product"><input type="checkbox" name="drinks" value="Sok" data-price="1.50"><span>🧃 Sok<div class="price">1,50 €</div></span></label>
+      <label class="product"><input type="checkbox" name="drinks" value="Kava" data-price="1.20"><span>☕ Kava<div class="price">1,20 €</div></span></label>
+      <label class="product"><input type="checkbox" name="drinks" value="Hell" data-price="1.80"><span>⚡ Hell<div class="price">1,80 €</div></span></label>
+      <label class="product"><input type="checkbox" name="drinks" value="Red Bull" data-price="2.00"><span>🔋 Red Bull<div class="price">2,00 €</div></span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🛍️ 6. Special note – posebna želja</h2>
+    <label class="field-label" for="special">Želiš neki drugi artikl ili imaš posebnu napomenu?</label>
+    <textarea id="special" placeholder="Npr. čokoladno mlijeko, kroasan, bez majoneze..."></textarea>
+    <div class="field">
+      <label class="field-label" for="specialPrice">Cijena posebnog artikla (€), ako je poznata</label>
+      <input id="specialPrice" type="number" min="0" step="0.01" value="0" placeholder="0,00">
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💶 7. Plaćanje</h2>
+    <div class="field">
+      <label class="field-label" for="money">Koliko novca si dao/la? (€)</label>
+      <input id="money" type="number" min="0" step="0.01" placeholder="Npr. 5,00">
+    </div>
+    <div class="field">
+      <label class="field-label" for="payment">Način plaćanja</label>
+      <select id="payment">
+        <option>Gotovina</option>
+        <option>Drugi način</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🧾 Pregled narudžbe</h2>
+    <div id="summary"></div>
+    <hr>
+    <div class="summary-line">
+      <span>Ukupno:</span>
+      <span class="total" id="total">0,00 €</span>
+    </div>
+    <div class="summary-line">
+      <span>Predano novca:</span><strong id="given">0,00 €</strong>
+    </div>
+    <div class="summary-line">
+      <span>Ostatak nakon plaćanja:</span><strong id="change">0,00 €</strong>
+    </div>
+    <p class="note">Pozitivan ostatak znači da treba vratiti novac učeniku. Negativan iznos znači da još treba doplatiti.</p>
+    <button type="submit" class="submit">✅ Potvrdi narudžbu</button>
+    <button type="button" class="secondary" id="reset">Obriši narudžbu</button>
+    <div id="result" style="margin-top:16px"></div>
+  </section>
+
+</form>
+</main>
+
+<script>
+const form = document.getElementById("orderForm");
+const money = document.getElementById("money");
+const specialPrice = document.getElementById("specialPrice");
+const result = document.getElementById("result");
+
+const euro = n => n.toLocaleString("hr-HR", {
+  style: "currency", currency: "EUR"
+});
+
+function selected(name) {
+  return [...form.querySelectorAll(`[name="${name}"]:checked`)];
+}
+
+function calculate() {
+  const sandwich = selected("sandwich")[0];
+  const drinks = selected("drinks");
+  const total =
+    Number(sandwich?.dataset.price || 0) +
+    drinks.reduce((sum, el) => sum + Number(el.dataset.price || 0), 0) +
+    Math.max(0, Number(specialPrice.value || 0));
+
+  const given = Math.max(0, Number(money.value || 0));
+  const difference = given - total;
+
+  document.getElementById("total").textContent = euro(total);
+  document.getElementById("given").textContent = euro(given);
+  document.getElementById("change").textContent = euro(difference);
+
+  const lines = [];
+  if (sandwich) lines.push(sandwich.value + " — " + euro(Number(sandwich.dataset.price)));
+  selected("bread").forEach(el => lines.push("Pecivo: " + el.value));
+  selected("salami").forEach(el => lines.push("Salama: " + el.value));
+  selected("extras").forEach(el => lines.push("Dodatak: " + el.value));
+  drinks.forEach(el => lines.push(el.value + " — " + euro(Number(el.dataset.price))));
+  if (document.getElementById("special").value.trim()) {
+    lines.push("Posebna želja: " + document.getElementById("special").value.trim());
+  }
+  if (Number(specialPrice.value) > 0) {
+    lines.push("Cijena posebnog artikla: " + euro(Number(specialPrice.value)));
+  }
+
+  document.getElementById("summary").innerHTML = lines.length
+    ? lines.map(line => `<div class="summary-line"><span>${escapeHTML(line)}</span></div>`).join("")
+    : "<p>Odaberi artikle za svoju narudžbu.</p>";
+
+  return { total, given, difference, lines };
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  })[char]);
+}
+
+form.addEventListener("change", calculate);
+form.addEventListener("input", calculate);
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  const order = calculate();
+  const student = document.getElementById("student").value.trim();
+  const className = document.getElementById("className").value.trim();
+  const special = document.getElementById("special").value.trim();
+  const payment = document.getElementById("payment").value;
+
+  if (order.given < order.total) {
+    if (!confirm("Učenik nije dao dovoljno novca. Želiš li ipak potvrditi narudžbu?")) return;
+  }
+
+  const receipt = [
+    "MIP — POTVRDA NARUDŽBE",
+    "-----------------------",
+    "Učenik: " + student,
+    "Razred: " + (className || "Nije upisan"),
+    "",
+    ...order.lines,
+    "",
+    "UKUPNO: " + euro(order.total),
+    "Predano: " + euro(order.given),
+    order.difference >= 0
+      ? "Za vratiti: " + euro(order.difference)
+      : "Za doplatiti: " + euro(-order.difference),
+    "Plaćanje: " + payment,
+    "Napomena: " + (special || "Nema"),
+    "",
+    "Narudžba je potvrđena na ovom uređaju."
+  ].join("\n");
+
+  result.style.display = "block";
+  result.textContent = receipt;
+
+  const copyButton = document.createElement("button");
+  copyButton.type = "button";
+  copyButton.className = "secondary";
+  copyButton.textContent = "📋 Kopiraj potvrdu";
+  copyButton.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(receipt);
+      copyButton.textContent = "✅ Kopirano!";
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = receipt;
+      result.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+      copyButton.textContent = "✅ Kopirano!";
+    }
+  };
+  result.appendChild(copyButton);
+
+  result.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if (!confirm("Želiš li obrisati cijelu narudžbu?")) return;
+  form.reset();
+  result.style.display = "none";
+  result.replaceChildren();
+  calculate();
+});
+
+calculate();
+</script>
+</body>
+</html>

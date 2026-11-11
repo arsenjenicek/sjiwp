@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Redaction+50:ital,wght@0,400;0,700;1,400&display=swap');
+body {
+	background-color: #F1DABF;
+	color: #000500;
+}
+
+h1, h2 {
+	color: #362417;
+	font-size: 50px;
+	letter-spacing: 4px;
+}
+
+a {
+	color: #92817A;
+	font-weight: bold;
+	text-decoration: none;
+	font-style: italic;
+	
+}
+
+body {
+	font-family: "Redaction 50", redaction-serif ;
+}
+
+p {
+	line-height: 1.6;
+}	

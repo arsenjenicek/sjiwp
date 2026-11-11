@@ -1,0 +1,41 @@
+/* Tema 1: Noć */
+
+body {
+    background-color: #14213d;
+    color: #e5e5e5;
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    color: #fca311;
+    font-size: 42px;
+}
+
+h2 {
+    color: #fca311;
+    border-bottom: 2px solid #fca311;
+}
+
+a {
+    color: #8ecae6;
+}
+
+img {
+    border: 4px solid #fca311;
+    border-radius: 12px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #fca311;
+    color: #14213d;
+}
+
+td {
+    background-color: #1f2f55;
+    border: 1px solid #3a4d7a;
+}
